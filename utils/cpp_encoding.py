@@ -5,8 +5,7 @@ def get_extrinsic_channel(imageTensor, focal_length, p_pt, extrinsic_para, CEILI
 	B, H, W = imageTensor.shape[0], imageTensor.shape[2], imageTensor.shape[3]
 	K = _get_intrinsic_matrix(focal_length, p_pt, B)
 
-	# adapt to our dataloader
-	# extrinsic_para: x, y ,z, roll, pitch, yaw
+	# make sure to adapt to your coordinate system 
 	cam_height, roll = extrinsic_para[:, 2], extrinsic_para[:, 4] # all with size: [B]
 	pitch = extrinsic_para[:, 3] - np.pi/2
 	R = torch.bmm(Rotx(pitch), Rotz(roll)) # B x 3 x 3
